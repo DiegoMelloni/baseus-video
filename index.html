@@ -1,29 +1,55 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" >
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Vídeo Baseus</title>
   <style>
     html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      background: black;
-      overflow: hidden;
+      margin: 0; padding: 0; height: 100%; overflow: hidden; background: black;
+      display: flex; align-items: center; justify-content: center;
     }
     video {
+      position: fixed;
+      top: 0; left: 0;
       width: 100vw;
       height: 100vh;
       object-fit: cover;
-      display: block;
+      z-index: -1;
+    }
+    #playButton {
+      background: rgba(255,255,255,0.8);
+      border: none;
+      padding: 1rem 2rem;
+      font-size: 1.5rem;
+      border-radius: 8px;
+      cursor: pointer;
+      user-select: none;
     }
   </style>
 </head>
 <body>
-  <video autoplay muted loop playsinline>
+  <video id="bgvideo" muted playsinline loop preload="auto" poster="https://i.postimg.cc/GhjyVPtL/Fundo-Design.png">
     <source src="Baseus.mp4" type="video/mp4" />
     Seu navegador não suporta vídeo HTML5.
   </video>
+
+  <button id="playButton">Clique para iniciar o vídeo</button>
+
+  <script>
+    const video = document.getElementById('bgvideo');
+    const btn = document.getElementById('playButton');
+
+    // Tenta autoplay automático
+    video.play().catch(() => {
+      // Autoplay falhou: botão fica visível para o usuário iniciar o vídeo
+      btn.style.display = 'block';
+    });
+
+    btn.addEventListener('click', () => {
+      video.play();
+      btn.style.display = 'none';
+    });
+  </script>
 </body>
 </html>
